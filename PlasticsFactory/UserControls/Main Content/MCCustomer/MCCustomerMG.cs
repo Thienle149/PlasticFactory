@@ -18,7 +18,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         public ProductOutputBO productOutputBO = new ProductOutputBO();
         public CustomerBO customerBO = new CustomerBO();
         public CustomerTypeBO customerTypeBO = new CustomerTypeBO();
-
+        public static int DoubleClickRow = 0;
         #endregion Generate Fiedld
 
         #region Support
@@ -130,8 +130,8 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 dataDS.Rows.Add();
                 Data.ProductInput productInput = new Data.ProductInput();
                 productInput = productInputBO.GetData(u => u.isDelete == false && u.ID == item.MSDH).First();
-                dataDS.Rows[i].Cells[0].Value = "NH" + item.ID.ToString("D6");
-                dataDS.Rows[i].Cells[1].Value = "KH" + item.Date.Value.Date.ToShortDateString();
+                dataDS.Rows[i].Cells[0].Value = "TT" + item.ID.ToString("D6");
+                dataDS.Rows[i].Cells[1].Value = item.Date.Value.Date.ToShortDateString();
                 dataDS.Rows[i].Cells[2].Value = "KH" + productInput.MSKH.ToString("d6");
                 dataDS.Rows[i].Cells[3].Value = customerBO.GetNameByID(productInput.MSKH);
                 dataDS.Rows[i].Cells[4].Value = "NH" + item.MSDH.Value.ToString("d6");
@@ -155,8 +155,8 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 dataDS.Rows.Add();
                 Data.ProductOutput productOutput = new Data.ProductOutput();
                 productOutput = productOutputBO.GetData(u => u.isDelete == false && u.ID == item.MSDH).First();
-                dataDS.Rows[i].Cells[0].Value = "NH" + item.ID.ToString("D6");
-                dataDS.Rows[i].Cells[1].Value = "KH" + item.Date.Value.Date.ToShortDateString();
+                dataDS.Rows[i].Cells[0].Value = "TT" + item.ID.ToString("D6");
+                dataDS.Rows[i].Cells[1].Value = item.Date.Value.Date.ToShortDateString();
                 dataDS.Rows[i].Cells[2].Value = "KH" + productOutput.MSKH.Value.ToString("d6");
                 dataDS.Rows[i].Cells[3].Value = customerBO.GetNameByID(productOutput.MSKH.Value);
                 dataDS.Rows[i].Cells[4].Value = "XH" + item.MSDH.Value.ToString("d6");
@@ -1046,5 +1046,22 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         }
 
         #endregion Date
+        
+        private void dataDS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            frmEditCustomerPay frmEditCustomerPay = new frmEditCustomerPay();
+            string MSTT = dataDS.Rows[e.RowIndex].Cells[0].Value.ToString();
+            string Date = dataDS.Rows[e.RowIndex].Cells[1].Value.ToString();
+            string MSHD = dataDS.Rows[e.RowIndex].Cells[4].Value.ToString();
+            string MSKH = dataDS.Rows[e.RowIndex].Cells[2].Value.ToString();
+            string CustomerName = dataDS.Rows[e.RowIndex].Cells[3].Value.ToString();
+            string ProductNames = dataDS.Rows[e.RowIndex].Cells[5].Value.ToString();
+            int ProductWeigth = int.Parse(dataDS.Rows[e.RowIndex].Cells[7].Value.ToString());
+            int Amount = int.Parse(dataDS.Rows[e.RowIndex].Cells[9].Value.ToString());
+            int Payed = int.Parse(dataDS.Rows[e.RowIndex].Cells[11].Value.ToString());
+            frmEditCustomerPay.Sender(MSTT,Date,MSHD,MSKH,CustomerName,ProductNames,ProductWeigth,Amount,Payed);
+            frmEditCustomerPay.ShowDialog();
+            txtCustomerName_SelectedValueChanged(sender, e);
+        }
     }
 }

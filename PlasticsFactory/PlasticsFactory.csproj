@@ -86,6 +86,12 @@
     <Compile Include="frmEdit.Designer.cs">
       <DependentUpon>frmEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmEditCustomerPay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEditCustomerPay.Designer.cs">
+      <DependentUpon>frmEditCustomerPay.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmEditProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +192,9 @@
     </Compile>
     <EmbeddedResource Include="frmEdit.resx">
       <DependentUpon>frmEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEditCustomerPay.resx">
+      <DependentUpon>frmEditCustomerPay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmEditProduct.resx">
       <DependentUpon>frmEditProduct.cs</DependentUpon>

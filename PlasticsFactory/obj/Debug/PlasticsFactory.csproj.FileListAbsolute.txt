@@ -586,3 +586,4 @@ C:\Users\thien\Desktop\PlasticFactory\PlasticsFactory\obj\Debug\PlasticsFactory.
 C:\Users\thien\Desktop\PlasticFactory\PlasticsFactory\obj\Debug\PlasticsFactory.csproj.CopyComplete
 C:\Users\thien\Desktop\PlasticFactory\PlasticsFactory\obj\Debug\PlasticsFactory.exe
 C:\Users\thien\Desktop\PlasticFactory\PlasticsFactory\obj\Debug\PlasticsFactory.pdb
+C:\Users\thien\Desktop\PlasticFactory\PlasticsFactory\obj\Debug\PlasticsFactory.frmEditCustomerPay.resources
