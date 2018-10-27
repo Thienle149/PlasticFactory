@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PlasticsFactory.UserControls.Main_Content.MCCustomer;
+using System;
 using System.Windows.Forms;
-using PlasticsFactory.UserControls.Main_Content.MCCustomer;
 
 namespace PlasticsFactory.UserControls.PreferenceMenu
 {
@@ -16,6 +9,7 @@ namespace PlasticsFactory.UserControls.PreferenceMenu
         public MCADDKhachhang mcADDBanhang;
         public MCThanhtoan mcThanhtoan;
         public MCCustomerMG mcCustomerMG;
+
         public PMCustomer()
         {
             InitializeComponent();

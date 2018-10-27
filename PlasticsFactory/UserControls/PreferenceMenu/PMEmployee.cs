@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PlasticsFactory.UserControls.Main_Content.MCEmployee;
+using System;
 using System.Windows.Forms;
-using PlasticsFactory.UserControls.Main_Content.MCEmployee;
 
 namespace PlasticsFactory.UserControls.PreferenceMenu
 {
@@ -15,6 +8,7 @@ namespace PlasticsFactory.UserControls.PreferenceMenu
     {
         private MCEAdd mceAdd = new MCEAdd();
         private MCEmployeeManagement mceManage = new MCEmployeeManagement();
+
         public PMEmployee()
         {
             InitializeComponent();

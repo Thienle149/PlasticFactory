@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PlasticsFactory.UserControls.Main_Content.MCProduct;
+using System;
 using System.Windows.Forms;
-using PlasticsFactory.UserControls.Main_Content.MCProduct;
 
 namespace PlasticsFactory.UserControls.PreferenceMenu
 {
     public partial class PMProduct : UserControl
     {
         #region Generate Field
+
         public ProductInput productInput = new ProductInput();
         public ProductOutput productOutput = new ProductOutput();
         private ProductManage productManage;
-        #endregion
+
+        #endregion Generate Field
+
         public PMProduct()
         {
             InitializeComponent();

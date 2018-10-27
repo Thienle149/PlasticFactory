@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using BUS.Business;
+﻿using BUS.Business;
 using PlasticsFactory.Data;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 {
     public partial class MCADDKhachhang : UserControl
     {
         #region Generate Field
+
         public CustomerBO customer = new CustomerBO();
         public TruckBO truckBO = new TruckBO();
         public int btnDoubleGrid = 0;
@@ -23,9 +18,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         private int currentlyTruckRows = 0;
         public int btnDoubleGirdOfTruck = 0;
         public int IDofTruck = 0;
-        #endregion
+
+        #endregion Generate Field
 
         #region Susport
+
         public void LoadTypeofCustomer()
         {
             var listDB = customer.GetTypeofCustomer();
@@ -62,7 +59,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 dataDS.Rows[i].Cells[4].Value = item.TypeofCustomer.Type;
                 i++;
             }
-
         }
 
         public void Refreshs()
@@ -108,7 +104,9 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             txtLicencePlate.ResetText();
             dataDSoftruck.Rows.Clear();
         }
-        #endregion
+
+        #endregion Susport
+
         public MCADDKhachhang()
         {
             InitializeComponent();
@@ -116,7 +114,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 
         private void txtTypeofCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void MCADDKhachhang_Load(object sender, EventArgs e)
@@ -187,6 +184,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                         }
                         btnDoubleGrid = 1;
                         break;
+
                     case 1:
                         txtMSKH.Text = customer.GetID();
                         LoadDG();
@@ -318,6 +316,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                         btnDoubleGirdOfTruck = 1;
                         btnAditoftruck.Enabled = false;
                         break;
+
                     case 1:
                         btnDoubleGirdOfTruck = 0;
                         btnAditoftruck.Enabled = true;
@@ -351,7 +350,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 
         private void btnRemoveoftruck_Click(object sender, EventArgs e)
         {
-           if(IDofTruck!=0)
+            if (IDofTruck != 0)
             {
                 truckBO.Delete(IDofTruck);
                 RefreshTruckNoRemoveMSKH();
@@ -373,7 +372,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 
         private void txtName_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode==Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 txtSDT.Focus();
             }
@@ -381,7 +380,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 
         private void txtSDT_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode==Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 btnThem.Focus();
                 btnEdit.Focus();
@@ -390,7 +389,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 
         private void txtLicencePlate_KeyUp(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode==Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 txtWeightofTruck.Focus();
             }

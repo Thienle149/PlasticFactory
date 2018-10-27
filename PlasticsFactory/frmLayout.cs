@@ -1,24 +1,17 @@
-﻿using PlasticsFactory.UserControls.Main_Content.MCEmployee;
+﻿using PlasticsFactory.UserControls.Main_Content.MCChamcong;
+using PlasticsFactory.UserControls.Main_Content.MCCustomer;
+using PlasticsFactory.UserControls.Main_Content.MCEmployee;
+using PlasticsFactory.UserControls.Main_Content.MCProduct;
 using PlasticsFactory.UserControls.PreferenceMenu;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using BUS;
-using PlasticsFactory.UserControls.Main_Content.MCChamcong;
-using PlasticsFactory.UserControls.Main_Content.MCCustomer;
-using PlasticsFactory.UserControls.Main_Content.MCProduct;
 
 namespace PlasticsFactory
 {
     public partial class frmLayout : Form
     {
         #region Generate Field
+
         public static Panel panelContents = new Panel();
         public PMChamcong pmChamcong = new PMChamcong();
         public MCADDKhachhang mcADDBanhang = new MCADDKhachhang();
@@ -29,7 +22,8 @@ namespace PlasticsFactory
         public PMEmployee pmEployee;
         public MCAll mcAll = new MCAll();
 
-        #endregion
+        #endregion Generate Field
+
         //public PMChamcong pmChamcong;
 
         public frmLayout()
@@ -61,7 +55,7 @@ namespace PlasticsFactory
         {
             panelPreference.Controls.Clear();
             panelContents.Controls.Clear();
-            mcAll=mcAll??new MCAll();
+            mcAll = mcAll ?? new MCAll();
             pmChamcong = pmChamcong ?? new PMChamcong();
             panelPreference.Controls.Add(pmChamcong);
             panelContents.Controls.Add(mcAll);
@@ -79,7 +73,6 @@ namespace PlasticsFactory
 
         private void hàngHóaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             panelPreference.Controls.Clear();
             panelContents.Controls.Clear();
             pmProduct = pmProduct ?? new PMProduct();

@@ -1,37 +1,38 @@
-﻿using System;
+﻿using BUS.Business;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using BUS.Business;
 
 namespace PlasticsFactory.UserControls.Main_Content.MCProduct
 {
     public partial class ProductOutput : UserControl
     {
         #region Generate Field
-        List<Data.ProductOutput> list = new List<Data.ProductOutput>();
-        Data.ProductOutput product = new Data.ProductOutput();
+
+        private List<Data.ProductOutput> list = new List<Data.ProductOutput>();
+        private Data.ProductOutput product = new Data.ProductOutput();
+
         //Các loại sản phẩm
-        ProductOBO productBO = new ProductOBO();
-        ProductOutputBO productInputBO = new ProductOutputBO();
+        private ProductOBO productBO = new ProductOBO();
+
+        private ProductOutputBO productInputBO = new ProductOutputBO();
         public CustomerBO customer = new CustomerBO();
-        TruckBO truckBO = new TruckBO();
-        int flagRow = 0;
-        int currentlyRows = 0;
-        int fladID = 0;
+        private TruckBO truckBO = new TruckBO();
+        private int flagRow = 0;
+        private int currentlyRows = 0;
+        private int fladID = 0;
         public static int productID = 0;
-        #endregion
+
+        #endregion Generate Field
 
         #region Support
+
         public int SplitMSKH(string MSKH)
         {
             return int.Parse(MSKH.Trim().Substring(2));
         }
+
         public void loadCustomerName()
         {
             var listDB = customer.GetData(u => u.isDelete == false && u.TypeofCustomer.Type == "Xuất hàng", u => u.TypeofCustomer);
@@ -41,6 +42,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                 txtHoten.Items.Add(item.Name);
             }
         }
+
         public void loadLecencePlate()
         {
             try
@@ -56,6 +58,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             }
             catch { }
         }
+
         public void loadProduct()
         {
             try
@@ -71,6 +74,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             }
             catch { }
         }
+
         public void loadInput()
         {
             product = new Data.ProductOutput();
@@ -86,6 +90,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             product.TotalAmount = Int32.Parse(txtProductWeight.Text) * Int32.Parse(txtPrice.Text);
             product.ProductPrice = Int32.Parse(txtPrice.Text);
         }
+
         public void loadWeight()
         {
             try
@@ -95,6 +100,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             }
             catch { }
         }
+
         public bool Validation()
         {
             if (txtMSKH.Text == string.Empty || txtProductName.Text == string.Empty || txtPrice.Text == string.Empty || txtLicencePlate.Text == string.Empty || txtTruckofWeight.Text == string.Empty || txtAll.Text == string.Empty)
@@ -110,6 +116,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             }
             return true;
         }
+
         public void loadDG()
         {
             int i = 0;
@@ -134,6 +141,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                 ID++;
             }
         }
+
         public void RefreshAdd()
         {
             txtMSKH.Items.Clear();
@@ -145,6 +153,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             txtAll.ResetText();
             txtProductWeight.ResetText();
         }
+
         public void GetDGByForm(int r)
         {
             if (r < dataDS.Rows.Count - 1)
@@ -168,6 +177,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                         btnThem.Visible = false;
                         btnEdit.Visible = true;
                         break;
+
                     case 1:
                         flagRow = 0;
                         fladID = 0;
@@ -180,6 +190,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                 }
             }
         }
+
         public int GetIDMSHD()
         {
             if (list.Count != 0)
@@ -197,7 +208,9 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             }
             return productInputBO.GetID();
         }
-        #endregion
+
+        #endregion Support
+
         public ProductOutput()
         {
             InitializeComponent();
@@ -212,6 +225,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
         }
 
         #region Event Customer
+
         private void txtHoten_Leave(object sender, EventArgs e)
         {
             txtMSKH.ResetText();
@@ -274,9 +288,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             }
         }
 
-        #endregion
+        #endregion Event Customer
 
         #region Event Product
+
         private void txtProductName_Leave(object sender, EventArgs e)
         {
             if (txtProductName.Text != "")
@@ -308,9 +323,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                 txtLicencePlate.Focus();
             }
         }
-        #endregion
+
+        #endregion Event Product
 
         #region Event Truck
+
         private void txtLicencePlate_Leave(object sender, EventArgs e)
         {
             loadWeight();
@@ -351,9 +368,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
             }
         }
 
-        #endregion
+        #endregion Event Truck
 
         #region AllWeight
+
         private void txtAll_Leave(object sender, EventArgs e)
         {
             try
@@ -381,7 +399,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                 btnThem.Focus();
                 btnEdit.Focus();
             }
-
         }
 
         private void txtAll_KeyPress(object sender, KeyPressEventArgs e)
@@ -391,14 +408,15 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                 e.Handled = true;
             }
         }
-        #endregion
+
+        #endregion AllWeight
 
         #region DataGridView
+
         private void dataDS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             GetDGByForm(e.RowIndex);
         }
-
 
         private void dataDS_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
@@ -411,9 +429,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                 currentlyRows = dataDS.Rows.Count;
             }
         }
-        #endregion
 
-        #region button 
+        #endregion DataGridView
+
+        #region button
+
         private void btnThem_Click(object sender, EventArgs e)
         {
             if (Validation())
@@ -514,6 +534,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCProduct
                 }
             }
         }
-        #endregion
+
+        #endregion button
     }
 }

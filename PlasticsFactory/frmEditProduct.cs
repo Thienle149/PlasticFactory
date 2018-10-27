@@ -1,13 +1,7 @@
 ﻿using BUS.Business;
 using PlasticsFactory.UserControls.Main_Content.MCProduct;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PlasticsFactory
@@ -15,25 +9,29 @@ namespace PlasticsFactory
     public partial class frmEditProduct : Form
     {
         #region Genarete Field
-        Data.ProductInput productInput = new Data.ProductInput();
-        ProductInputBO productInputBO = new ProductInputBO();
-        ProductBO productIpBO = new ProductBO();
-        Data.ProductOutput productOutput = new Data.ProductOutput();
-        ProductOutputBO productOutputBO = new ProductOutputBO();
-        ProductOBO productOBO = new ProductOBO();
-        TruckBO truckBO = new TruckBO();
-        #endregion
+
+        private Data.ProductInput productInput = new Data.ProductInput();
+        private ProductInputBO productInputBO = new ProductInputBO();
+        private ProductBO productIpBO = new ProductBO();
+        private Data.ProductOutput productOutput = new Data.ProductOutput();
+        private ProductOutputBO productOutputBO = new ProductOutputBO();
+        private ProductOBO productOBO = new ProductOBO();
+        private TruckBO truckBO = new TruckBO();
+
+        #endregion Genarete Field
 
         #region Support
+
         private void loadProductTypeInput()
         {
             var listDB = productIpBO.GetData(u => u.isDelete == false);
             txtProductName.Items.Clear();
-            foreach(var item in listDB)
+            foreach (var item in listDB)
             {
                 txtProductName.Items.Add(item.Name);
             }
         }
+
         private void loadProductPriceInput()
         {
             var listDB = productIpBO.GetData(u => u.isDelete == false);
@@ -43,15 +41,17 @@ namespace PlasticsFactory
                 txtPrice.Items.Add(item.Price);
             }
         }
+
         private void loadLicencePlateInput(int MSKH)
         {
             var listDB = truckBO.GetData(u => u.isDelete == false && u.MSKH == MSKH);
             txtLicencePlate.Items.Clear();
-            foreach( var item in listDB)
+            foreach (var item in listDB)
             {
                 txtLicencePlate.Items.Add(item.LicencePlate);
             }
         }
+
         private void loadProductTypeOutput()
         {
             var listDB = productOBO.GetData(u => u.isDelete == false);
@@ -61,6 +61,7 @@ namespace PlasticsFactory
                 txtProductName.Items.Add(item.Name);
             }
         }
+
         private void loadProductPriceOutput()
         {
             var listDB = productOBO.GetData(u => u.isDelete == false);
@@ -70,6 +71,7 @@ namespace PlasticsFactory
                 txtPrice.Items.Add(item.Price);
             }
         }
+
         private void loadLicencePlateOutput(int MSKH)
         {
             var listDB = truckBO.GetData(u => u.isDelete == false && u.MSKH == MSKH);
@@ -79,10 +81,12 @@ namespace PlasticsFactory
                 txtLicencePlate.Items.Add(item.LicencePlate);
             }
         }
+
         public int SplitMSKH(string MSKH)
         {
             return int.Parse(MSKH.Trim().Substring(2));
         }
+
         public void loadWeight()
         {
             try
@@ -91,9 +95,10 @@ namespace PlasticsFactory
             }
             catch { }
         }
+
         public bool Validation()
         {
-            if ( txtProductName.Text == string.Empty || txtPrice.Text == string.Empty || txtLicencePlate.Text == string.Empty || txtTruckofWeight.Text == string.Empty || txtAll.Text == string.Empty)
+            if (txtProductName.Text == string.Empty || txtPrice.Text == string.Empty || txtLicencePlate.Text == string.Empty || txtTruckofWeight.Text == string.Empty || txtAll.Text == string.Empty)
             {
                 return false;
             }
@@ -106,6 +111,7 @@ namespace PlasticsFactory
             }
             return true;
         }
+
         public void loadInput()
         {
             if (ProductManage.Input == true)
@@ -139,12 +145,14 @@ namespace PlasticsFactory
                 productOutput.ProductPrice = Int32.Parse(txtPrice.Text);
             }
         }
-        #endregion
+
+        #endregion Support
+
         public frmEditProduct()
         {
             InitializeComponent();
         }
-        
+
         private void frmEditProduct_Load(object sender, EventArgs e)
         {
             txtProductName.Focus();
@@ -197,10 +205,10 @@ namespace PlasticsFactory
                 }
                 else
                 {
-                    if(ProductManage.Input==true)
+                    if (ProductManage.Input == true)
                     {
                         loadInput();
-                        bool isCheck=productInputBO.Update(productInput);
+                        bool isCheck = productInputBO.Update(productInput);
                     }
                     else
                     {
@@ -218,6 +226,7 @@ namespace PlasticsFactory
         }
 
         #region Event Product
+
         private void txtProductName_Leave(object sender, EventArgs e)
         {
             if (ProductManage.Input == true)
@@ -259,9 +268,11 @@ namespace PlasticsFactory
                 txtLicencePlate.Focus();
             }
         }
-        #endregion
+
+        #endregion Event Product
 
         #region Event Truck
+
         private void txtLicencePlate_Leave(object sender, EventArgs e)
         {
             loadWeight();
@@ -301,9 +312,11 @@ namespace PlasticsFactory
                 e.Handled = true;
             }
         }
-        #endregion
+
+        #endregion Event Truck
 
         #region AllWeight
+
         private void txtAll_Leave(object sender, EventArgs e)
         {
             try
@@ -330,7 +343,6 @@ namespace PlasticsFactory
                 catch { }
                 btnEdit.Focus();
             }
-
         }
 
         private void txtAll_KeyPress(object sender, KeyPressEventArgs e)
@@ -340,6 +352,7 @@ namespace PlasticsFactory
                 e.Handled = true;
             }
         }
-        #endregion
+
+        #endregion AllWeight
     }
 }

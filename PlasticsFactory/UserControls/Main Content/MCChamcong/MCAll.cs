@@ -1,28 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using BUS.Business;
 using PlasticsFactory.Data;
-using BUS.Business;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+
 namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
 {
     public partial class MCAll : UserControl
     {
         #region field
+
         public List<Timekeeping> list = new List<Timekeeping>();
         public TimekeepingBO timekeepingBO = new TimekeepingBO();
         public Timekeeping timekeeping;
-        public int btnDoubleGrid=0;
+        public int btnDoubleGrid = 0;
         private string tempMSNV = "";
         private string dateByMSNV = "";
-        #endregion
+
+        #endregion field
 
         #region support
+
         public void LoadAutoRefreshInformation()
         {
             loadListTimekeeping();
@@ -40,6 +39,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             dateByMSNV = "";
             txtHoten.Focus();
         }
+
         public void loadListTimekeeping()
         {
             int i = 0;
@@ -61,6 +61,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 i++;
             }
         }
+
         public float Interval(string timeStart, string timeEnd)
         {
             string[] str1 = timeStart.Split(':');
@@ -80,6 +81,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 return (24 - hourStart) + hourEnd;
             }
         }
+
         public Timekeeping ObjectTimekeeping()
         {
             Timekeeping timekeeping = new Timekeeping();
@@ -116,7 +118,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             {
                 string[] strCash = txtCashAdvance.Text.Split(',');
                 string str = "";
-                foreach(var item in strCash)
+                foreach (var item in strCash)
                 {
                     str += item;
                 }
@@ -126,6 +128,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             timekeeping.isDelete = false;
             return timekeeping;
         }
+
         public void loadWeight()
         {
             List<TypeWeight> list = timekeepingBO.GetWeight();
@@ -135,6 +138,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
             txtTypeWeight.Text = list.First().KG.ToString();
         }
+
         public void loadMSNV(string Name)
         {
             txtMSNV.Items.Clear();
@@ -145,6 +149,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
             txtMSNV.Text = list.First();
         }
+
         public void loadDay(int month, int year)
         {
             int day = DateTime.DaysInMonth(year, month);
@@ -160,6 +165,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtNgay.Text = "";
             }
         }
+
         public void loadMonth()
         {
             txtThang.Items.Clear();
@@ -168,6 +174,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtThang.Items.Add(i);
             }
         }
+
         public void loadYear()
         {
             int Year = DateTime.Now.Year;
@@ -176,6 +183,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtNam.Items.Add(i);
             }
         }
+
         public void loadDayMonthYear()
         {
             txtNgay.Text = DateTime.Now.Day.ToString();
@@ -187,6 +195,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             loadMonth();
             loadYear();
         }
+
         public void loadHoten()
         {
             List<string> listName = timekeepingBO.GetNameEmployee();
@@ -195,22 +204,24 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtHoten.Items.Add(item);
             }
         }
-        public bool IsEmployeeByDateInList(string MSNV,string Date)
+
+        public bool IsEmployeeByDateInList(string MSNV, string Date)
         {
             int result = list.Count(u => u.MSNV == MSNV && u.Date == DateTime.Parse(Date));
-            if(result==1)
+            if (result == 1)
             {
                 return true;
             }
             return false;
         }
-        #endregion
+
+        #endregion support
+
         public MCAll()
         {
             InitializeComponent();
-
         }
-        
+
         private void MCAll_Load(object sender, EventArgs e)
         {
             txtHoten.Focus();
@@ -218,7 +229,9 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             loadHoten();
             loadWeight();
         }
+
         #region Event Infomation Employee
+
         private void txtThang_KeyUp(object sender, KeyEventArgs e)
         {
             try
@@ -400,9 +413,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtMSNV.Items.Clear();
             }
         }
-        #endregion
+
+        #endregion Event Infomation Employee
 
         #region Event Time
+
         private void txtThoigianBD_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -590,9 +605,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             { }
         }
 
-        #endregion
+        #endregion Event Time
 
         #region Event Weight
+
         private void txtTypeWeight_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
@@ -613,9 +629,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtCashAdvance.Focus();
             }
         }
-        #endregion
+
+        #endregion Event Weight
 
         #region Event CashAdvance
+
         private void txtCashAdvance_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (txtCashAdvance.Text.Length > 12)
@@ -683,9 +701,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtNote.Focus();
             }
         }
-        #endregion
+
+        #endregion Event CashAdvance
 
         #region Event DataGridViews
+
         private void dataDS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex != dataDS.RowCount - 1)
@@ -733,6 +753,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                         txtNam.Enabled = false;
                         btnDoubleGrid = 1;
                         break;
+
                     case 1:
                         txtNgay.Enabled = true;
                         txtThang.Enabled = true;
@@ -772,9 +793,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
         }
 
-        #endregion
+        #endregion Event DataGridViews
 
         #region Button
+
         private void btnRemove_Click(object sender, EventArgs e)
         {
             if (tempMSNV != "")
@@ -884,6 +906,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             btnEdit.Visible = false;
             btnThem.Visible = true;
         }
-        #endregion
+
+        #endregion Button
     }
 }

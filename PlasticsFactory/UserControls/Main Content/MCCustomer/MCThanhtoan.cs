@@ -1,20 +1,18 @@
-﻿using System;
+﻿using BUS.Business;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using BUS.Business;
 
 namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 {
     public partial class MCThanhtoan : UserControl
     {
         #region Generate Field
-        private string IDOfThanhToan=string.Empty;
+
+        private string IDOfThanhToan = string.Empty;
         public ProductBO productIpBO = new ProductBO();
         public ProductInputBO productInputBO = new ProductInputBO();
         public ProductOBO productOBO = new ProductOBO();
@@ -30,9 +28,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         public static int MSHD = 0;
         public static bool Input = false;
         private int tempClickDS = 0;
-        #endregion
+
+        #endregion Generate Field
 
         #region Support
+
         private int CheckPayment()
         {
             int Amount = 0;
@@ -55,10 +55,12 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 return Amount;
             }
         }
+
         private int GetMSDH(string Name)
         {
             return int.Parse(Name.Trim().Split('D')[1]);
         }
+
         private int GetMSTTofInput()
         {
             int result = paymentInputBO.GetID();
@@ -82,6 +84,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             return result;
         }
+
         private int GetMSTTofOutput()
         {
             int result = paymentOutputBO.GetID();
@@ -105,10 +108,12 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             return result;
         }
+
         private int GetIDOfCustomer(string ID)
         {
             return int.Parse(ID.Split('H')[1]);
         }
+
         private int ConvertStringToInt(string value)
         {
             string[] str = value.Trim().Split(',');
@@ -121,12 +126,14 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             result = int.Parse(temp);
             return result;
         }
+
         private void RefreshPayment()
         {
             txtMSDH.ResetText();
             txtPay.Text = "0";
             txtNoteMoney.Text = "0";
         }
+
         private void RefreshALL()
         {
             dataDS.Rows.Clear();
@@ -138,6 +145,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             txtMSKH.Text = string.Empty;
             RefreshPayment();
         }
+
         private void RefreshOfUpdate()
         {
             loadHD();
@@ -160,6 +168,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             btnRemove.Enabled = true;
             btnSave.Enabled = true;
         }
+
         private void loadCustomerType()
         {
             txtCustomerType.Items.Clear();
@@ -170,6 +179,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtCustomerType.Text = listDB.First().Type;
         }
+
         private void loadCustomerName()
         {
             txtCustomerName.Items.Clear();
@@ -179,6 +189,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 txtCustomerName.Items.Add(item.Name);
             }
         }
+
         private void loadDay(int month, int year)
         {
             int day = DateTime.DaysInMonth(year, month);
@@ -195,6 +206,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 txtNgay.Text = "";
             }
         }
+
         private void loadMonth()
         {
             txtThang.Items.Clear();
@@ -203,6 +215,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 txtThang.Items.Add(i);
             }
         }
+
         private void loadYear()
         {
             int Year = DateTime.Now.Year;
@@ -211,6 +224,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 txtNam.Items.Add(i);
             }
         }
+
         private void loadDayMonthYear()
         {
             txtNgay.Text = DateTime.Now.Day.ToString();
@@ -222,12 +236,14 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             loadMonth();
             loadYear();
         }
+
         private void loadRefreshOfHD()
         {
             txtMSDH.ResetText();
             txtNoteMoney.Text = "0";
             txtPay.Text = "0";
         }
+
         private void loadHD()
         {
             try
@@ -250,13 +266,13 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                     {
                         int Month = int.Parse(txtThang.Text);
                         int year = int.Parse(txtNam.Text);
-                        listDB = productInputBO.GetData(u => u.isDelete == false && u.MSKH == ID && u.Date.Value.Month == Month && u.Date.Value.Year == year&&u.Paid==false).ToList();
+                        listDB = productInputBO.GetData(u => u.isDelete == false && u.MSKH == ID && u.Date.Value.Month == Month && u.Date.Value.Year == year && u.Paid == false).ToList();
                     }
                     foreach (var item in listDB)
                     {
                         dataHD.Rows.Add();
                         dataHD.Rows[i].Cells[0].Value = "HD" + item.ID.ToString("d6");
-                        //color 
+                        //color
                         if (listInput.Count != 0)
                         {
                             int Payment = listInput.Where(u => u.MSDH == item.ID).Sum(u => u.Payment).Value;
@@ -264,7 +280,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                             {
                                 dataHD.Rows[i].Cells[0].Style.BackColor = Color.Green;
                             }
-                            if (Payment!=0 && Payment < item.TotalAmount - item.Payed)
+                            if (Payment != 0 && Payment < item.TotalAmount - item.Payed)
                             {
                                 dataHD.Rows[i].Cells[0].Style.BackColor = Color.Orange;
                             }
@@ -295,13 +311,13 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                     {
                         int Month = int.Parse(txtThang.Text);
                         int year = int.Parse(txtNam.Text);
-                        listDB = productOutputBO.GetData(u => u.isDelete == false && u.MSKH == ID && u.Date.Value.Month == Month && u.Date.Value.Year == year&&u.Paid==false).ToList();
+                        listDB = productOutputBO.GetData(u => u.isDelete == false && u.MSKH == ID && u.Date.Value.Month == Month && u.Date.Value.Year == year && u.Paid == false).ToList();
                     }
                     foreach (var item in listDB)
                     {
                         dataHD.Rows.Add();
                         dataHD.Rows[i].Cells[0].Value = "HD" + item.ID.ToString("d6");
-                        //color 
+                        //color
                         if (listOutput.Count != 0)
                         {
                             int Payment = listOutput.Where(u => u.MSDH == item.ID).Sum(u => u.Payment).Value;
@@ -327,6 +343,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             catch { }
         }
+
         private int loadMoney(string msdh)
         {
             int result = 0;
@@ -347,6 +364,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             return result;
         }
+
         private Data.PaymentInput loadListInput()
         {
             paymentInput = new Data.PaymentInput();
@@ -355,9 +373,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             paymentInput.MSDH = int.Parse(txtMSDH.Text.Trim().Substring(2));
             paymentInput.Payment = ConvertStringToInt(txtPay.Text);
             paymentInput.isDelete = false;
-            
+
             return paymentInput;
         }
+
         private Data.PaymentOutput loadListOutput()
         {
             paymentOutput = new Data.PaymentOutput();
@@ -368,13 +387,14 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             paymentOutput.isDelete = false;
             return paymentOutput;
         }
+
         private void loadDG()
         {
             dataDS.Rows.Clear();
             int i = 0;
             foreach (var item in listInput)
             {
-                int mskh= productInputBO.GetData(u => u.ID == item.MSDH).First().MSKH;
+                int mskh = productInputBO.GetData(u => u.ID == item.MSDH).First().MSKH;
                 dataDS.Rows.Add();
                 dataDS.Rows[i].Cells[0].Value = "NH" + item.ID.ToString("D6");
                 dataDS.Rows[i].Cells[1].Value = item.Date.ToString();
@@ -398,7 +418,9 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 i++;
             }
         }
-        #endregion
+
+        #endregion Support
+
         public MCThanhtoan()
         {
             InitializeComponent();
@@ -416,6 +438,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         }
 
         #region Event Information
+
         private void txtCustomerType_SelectedValueChanged(object sender, EventArgs e)
         {
             if (txtCustomerType.Text == "Nhập hàng")
@@ -451,9 +474,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
         }
 
-        #endregion
+        #endregion Event Information
 
         #region Event Infomation Employee
+
         private void txtThang_KeyUp(object sender, KeyEventArgs e)
         {
             try
@@ -599,9 +623,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
         }
 
-        #endregion
+        #endregion Event Infomation Employee
 
         #region Event DataGridView Bill
+
         private void dataHD_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -621,9 +646,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             catch { }
         }
-        #endregion
+
+        #endregion Event DataGridView Bill
 
         #region Event BIll
+
         private void txtMSKH_SelectedValueChanged(object sender, EventArgs e)
         {
             loadHD();
@@ -633,9 +660,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         {
             loadHD();
         }
-        #endregion
+
+        #endregion Event BIll
 
         #region Event Pay
+
         private void txtPay_KeyPress(object sender, KeyPressEventArgs e)
         {
             //if (txtPay.Text.Length > 12)
@@ -702,9 +731,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             {
             }
         }
-        #endregion
+
+        #endregion Event Pay
 
         #region Button
+
         private void btnThem_Click(object sender, EventArgs e)
         {
             if (txtCustomerType.Text == "Nhập hàng")
@@ -713,7 +744,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 {
                     if (CheckPayment() - ConvertStringToInt(txtPay.Text) >= 0)
                     {
-
                         //color datads bill
                         if (CheckPayment() - ConvertStringToInt(txtPay.Text) > 0)
                         {
@@ -787,7 +817,8 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 }
             }
         }
-        #endregion
+
+        #endregion Button
 
         //Tong hop khoa key
         private void txtCustomerType_KeyPress(object sender, KeyPressEventArgs e)
@@ -798,7 +829,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         private void btnSave_Click(object sender, EventArgs e)
         {
             paymentInputBO.Add(listInput);
-            foreach(var item in listOutput)
+            foreach (var item in listOutput)
             {
                 paymentOutputBO.Add(item);
             }
@@ -807,7 +838,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 
         private void txtCustomerName_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void dataDS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -819,8 +849,8 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                     case 0:
                         try
                         {
-                            string CustomerType = dataDS.Rows[e.RowIndex].Cells[0].Value.ToString().Substring(0,2);
-                            if(CustomerType=="NH")
+                            string CustomerType = dataDS.Rows[e.RowIndex].Cells[0].Value.ToString().Substring(0, 2);
+                            if (CustomerType == "NH")
                             {
                                 txtCustomerType.Text = "Nhập hàng";
                             }
@@ -843,8 +873,9 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                         }
                         tempClickDS = 1;
                         break;
+
                     case 1:
-                        if(txtCustomerType.Text=="Nhập hàng")
+                        if (txtCustomerType.Text == "Nhập hàng")
                         {
                             txtID.Text = "NH" + GetMSTTofInput().ToString("d6");
                         }
@@ -866,7 +897,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if(txtCustomerType.Text=="Nhập hàng")
+            if (txtCustomerType.Text == "Nhập hàng")
             {
                 paymentInput = new Data.PaymentInput();
                 int Id = int.Parse(txtID.Text.Trim().Substring(2));
@@ -888,10 +919,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if(IDOfThanhToan!=string.Empty)
+            if (IDOfThanhToan != string.Empty)
             {
                 string Type = IDOfThanhToan.Substring(0, 2);
-                if(Type=="NH")
+                if (Type == "NH")
                 {
                     string masseage = "Bạn có muốn xóa hóa đơn thanh toán " + IDOfThanhToan + "không ?";
                     string Title = "Chú ý";

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using BUS.Business;
 using PlasticsFactory.Data;
-using BUS.Business;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
 {
     public partial class Management : UserControl
     {
         #region Generate Field
+
         private List<Timekeeping> list = new List<Timekeeping>();
         public DateTime Now = DateTime.Now.Date;
         public TimekeepingBO timekeepingBO = new TimekeepingBO();
@@ -24,9 +20,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
         public int totalWeight = 0;
         private string tempMSNV = "";
 
-        #endregion
+        #endregion Generate Field
 
         #region Support
+
         public void LoadDataGird(IEnumerable<Timekeeping> listData)
         {
             int i = 0;
@@ -59,11 +56,13 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtWriteMoney.Text = "(" + UnitMoney(totalCashAdvance) + ")";
             }
         }
+
         public void LoadDataDS(DateTime date)
         {
             var ListDB = timekeepingBO.GetData(u => u.isDelete == false && u.Date.Value.Month == date.Month && u.Date.Value.Year == date.Year);
             LoadDataGird(ListDB);
         }
+
         public void LoadDataDSByMSNV(string MSNV, DateTime date)
         {
             if (MSNV.Equals(""))
@@ -76,21 +75,25 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 LoadDataGird(listDB);
             }
         }
+
         public void LoadDataDSByDay(DateTime date)
         {
             var listDB = timekeepingBO.GetData(u => u.isDelete == false && u.Date.Value.Day == date.Day && u.Date.Value.Month == date.Month && u.Date.Value.Year == date.Year);
             LoadDataGird(listDB);
         }
+
         public void LoadDataDSByDayMonthYearMSNV(string MSNV, DateTime date)
         {
             var listDB = timekeepingBO.GetData(u => u.isDelete == false && u.MSNV == MSNV && u.Date.Value.Day == date.Day && u.Date.Value.Month == date.Month && u.Date.Value.Year == date.Year);
             LoadDataGird(listDB);
         }
+
         public void LoadDataDSByMonthNotMSNVAndDay(DateTime date)
         {
             var listDB = timekeepingBO.GetData(u => u.isDelete == false && u.Date.Value.Month == date.Month && u.Date.Value.Year == date.Year);
             LoadDataGird(listDB);
         }
+
         public void loadDay(int month, int year)
         {
             try
@@ -111,6 +114,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
             catch { }
         }
+
         public void loadMonth()
         {
             txtMonth.Items.Clear();
@@ -119,6 +123,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtMonth.Items.Add(i);
             }
         }
+
         public void loadYear()
         {
             int Year = DateTime.Now.Year;
@@ -127,6 +132,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 txtYear.Items.Add(i);
             }
         }
+
         public void loadDayMonthYear()
         {
             txtDay.Text = DateTime.Now.Day.ToString();
@@ -138,6 +144,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             loadMonth();
             loadYear();
         }
+
         public void LoadNameEmployeeName()
         {
             var listName = timekeepingBO.GetNameEmployee();
@@ -147,6 +154,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
             txtEmployee.Items.Add("All");
         }
+
         public string ConvertNumberToString(int number)
         {
             string[] str1 = { "không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín" };
@@ -172,6 +180,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
             return "";
         }
+
         public static string VietHoa(string s)
         {
             if (String.IsNullOrEmpty(s))
@@ -179,13 +188,13 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
 
             string result = "";
 
-            //lấy danh sách các từ  
+            //lấy danh sách các từ
 
             string[] words = s.Split(' ');
 
             foreach (string word in words)
             {
-                // từ nào là các khoảng trắng thừa thì bỏ  
+                // từ nào là các khoảng trắng thừa thì bỏ
                 if (word.Trim() != "")
                 {
                     if (word.Length > 1)
@@ -193,10 +202,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                     else
                         result += word.ToUpper() + " ";
                 }
-
             }
             return result.Trim();
         }
+
         public string UnitMoney(int money)
         {
             string[] strUnit = { " đồng ", "", " trăm ", " nghìn ", "", " trăm ", " triệu ", "", " trăm ", " tỷ ", "", " trăm " };
@@ -217,7 +226,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 {
                     tempRs = tempRs + "linh ";
                 }
-
                 else
                 {
                     tempRs = tempRs + result.Substring(i, 1);
@@ -247,11 +255,13 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
             return result;
         }
+
         public void LoadAutoRefreshInformation()
         {
             loadListTimekeeping();
             tempMSNV = "";
         }
+
         public void loadListTimekeeping()
         {
             int i = 0;
@@ -273,6 +283,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
                 i++;
             }
         }
+
         public void loadRefreshUpdateRemove()
         {
             if (txtMSNV.Text.Equals(""))
@@ -297,7 +308,8 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
         }
 
-        #endregion
+        #endregion Support
+
         public Management()
         {
             InitializeComponent();
@@ -315,6 +327,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
         }
 
         #region Event Search
+
         private void txtEmployee_SelectedValueChanged(object sender, EventArgs e)
         {
             var listMSNV = timekeepingBO.GetIdByName(txtEmployee.Text);
@@ -537,9 +550,10 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             e.Handled = true;
         }
 
-        #endregion
+        #endregion Event Search
 
         #region Event Update,Remove
+
         private void dataDS_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex != dataDS.RowCount - 1)
@@ -602,6 +616,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCChamcong
             }
         }
 
-        #endregion
+        #endregion Event Update,Remove
     }
 }

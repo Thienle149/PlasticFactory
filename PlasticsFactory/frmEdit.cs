@@ -3,12 +3,7 @@ using PlasticsFactory.Data;
 using PlasticsFactory.UserControls.Main_Content.MCChamcong;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PlasticsFactory
@@ -16,11 +11,14 @@ namespace PlasticsFactory
     public partial class frmEdit : Form
     {
         #region Generate Field
+
         public TimekeepingBO timekeepingBO = new TimekeepingBO();
         public DateTime Now = DateTime.Now.Date;
-        #endregion
+
+        #endregion Generate Field
 
         #region Support
+
         public void loadWeight()
         {
             List<TypeWeight> list = timekeepingBO.GetWeight();
@@ -30,6 +28,7 @@ namespace PlasticsFactory
             }
             txtTypeWeight.Text = list.First().KG.ToString();
         }
+
         public float Interval(string timeStart, string timeEnd)
         {
             string[] str1 = timeStart.Split(':');
@@ -49,7 +48,9 @@ namespace PlasticsFactory
                 return (24 - hourStart) + hourEnd;
             }
         }
-        #endregion
+
+        #endregion Support
+
         public frmEdit()
         {
             InitializeComponent();
@@ -68,6 +69,7 @@ namespace PlasticsFactory
         }
 
         #region Event Time
+
         private void txtThoigianBD_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -255,9 +257,10 @@ namespace PlasticsFactory
             { }
         }
 
-        #endregion
+        #endregion Event Time
 
         #region Event Weight
+
         private void txtTypeWeight_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
@@ -278,9 +281,11 @@ namespace PlasticsFactory
                 txtCashAdvance.Focus();
             }
         }
-        #endregion
+
+        #endregion Event Weight
 
         #region Event CashAdvance
+
         private void txtCashAdvance_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (txtCashAdvance.Text.Length > 12)
@@ -349,9 +354,10 @@ namespace PlasticsFactory
             }
         }
 
-        #endregion
+        #endregion Event CashAdvance
 
         #region Event Note
+
         private void txtNote_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -359,9 +365,11 @@ namespace PlasticsFactory
                 btnEdit.Focus();
             }
         }
-        #endregion
+
+        #endregion Event Note
 
         #region Button
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
             Timekeeping timekeeping = new Timekeeping();
@@ -410,8 +418,7 @@ namespace PlasticsFactory
             timekeepingBO.Update(timekeeping);
             this.Close();
         }
-        #endregion
 
-
+        #endregion Button
     }
 }

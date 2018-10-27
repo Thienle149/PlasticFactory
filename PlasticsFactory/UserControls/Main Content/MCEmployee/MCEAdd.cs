@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using BUS.Business;
 using PlasticsFactory.Data;
-using BUS.Business;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
 {
     public partial class MCEAdd : UserControl
     {
-        
         #region generate biến
+
         private List<Employee> list = new List<Employee>();
         private EmployeeBO employeeBO;
         private int tempClickDS = 0;
         private string tempMSNV = "";
         private string msnvBO;
-        #endregion
+
+        #endregion generate biến
 
         #region method support
+
         public string GetSex()
         {
             if (rdNam.Checked == true)
@@ -33,6 +29,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
             }
             return "Nữ";
         }
+
         public string BirthDay(DateTime date)
         {
             if (date.Year >= DateTime.Now.Year)
@@ -41,9 +38,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
             }
             return date.ToShortDateString();
         }
+
         public void RefreshInformation()
         {
             #region Reset Nhập thông tin
+
             lbWarn.Visible = false;
             txtMSNV.Text = GetMSNV();
             txtName.ResetText();
@@ -52,13 +51,15 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
             txtCMND.ResetText();
             txtBirthDay.ResetText();
             rdNam.Checked = true;
-            #endregion
+
+            #endregion Reset Nhập thông tin
         }
+
         public void LoadListEmployee()
         {
             int i = 0;
             dataDS.Rows.Clear();
-            //Sắp xep sort implement lại ICompare 
+            //Sắp xep sort implement lại ICompare
             list.Sort(new EmployeeComparer());
             foreach (var item in list)
             {
@@ -74,17 +75,18 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
                 i++;
             }
         }
+
         public string GetMSNV()
         {
             string[] arrStr = employeeBO.AutoGetMSNV().Split('V');
             int i = int.Parse(arrStr[1]);
-            string msnv="";
+            string msnv = "";
             int tempWhile = 0;
-            while(tempWhile!=1)
+            while (tempWhile != 1)
             {
                 msnv = "NV" + i.ToString("D3");
-                var check=list.FirstOrDefault(u => u.MSNV == msnv);
-                if(check==null)
+                var check = list.FirstOrDefault(u => u.MSNV == msnv);
+                if (check == null)
                 {
                     tempWhile = 1;
                 }
@@ -92,7 +94,9 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
             };
             return msnv;
         }
-        #endregion
+
+        #endregion method support
+
         public MCEAdd()
         {
             InitializeComponent();
@@ -134,13 +138,18 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
                 employee.Diachi = txtDiachi.Text;
                 employee.Ngaysinh = DateBirth;
                 list.Add(employee);
-                #region load dataGridview
-                LoadListEmployee();
-                #endregion
-                #region Reset Nhập thông tin
-                RefreshInformation();
-                #endregion
 
+                #region load dataGridview
+
+                LoadListEmployee();
+
+                #endregion load dataGridview
+
+                #region Reset Nhập thông tin
+
+                RefreshInformation();
+
+                #endregion Reset Nhập thông tin
             }
         }
 
@@ -150,7 +159,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
             {
                 e.Handled = true;
             }
-
         }
 
         private void MCEAdd_Load(object sender, EventArgs e)
@@ -178,7 +186,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
                 lbWarn.Visible = false;
             }
         }
-
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
@@ -208,6 +215,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
             else
             {
                 #region Update Employee
+
                 updateEmployee.MSNV = txtMSNV.Text;
                 updateEmployee.Hoten = txtName.Text;
                 updateEmployee.Gioitinh = Sex;
@@ -215,7 +223,9 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
                 updateEmployee.CMND = CMND;
                 updateEmployee.Diachi = txtDiachi.Text;
                 updateEmployee.Ngaysinh = DateBirth;
-                #endregion
+
+                #endregion Update Employee
+
                 //load datagridview
                 LoadListEmployee();
                 RefreshInformation();
@@ -255,6 +265,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
                         }
                         tempClickDS = 1;
                         break;
+
                     case 1:
                         RefreshInformation();
                         btnEdit.Visible = false;
@@ -276,20 +287,20 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-                if (tempMSNV != "")
+            if (tempMSNV != "")
+            {
+                string masseage = "Bạn có muốn xóa nhân viên " + tempMSNV + " không ?";
+                string Title = "Chú ý";
+                DialogResult result = MessageBox.Show(masseage, Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (result == DialogResult.Yes)
                 {
-                    string masseage = "Bạn có muốn xóa nhân viên " + tempMSNV + " không ?";
-                    string Title = "Chú ý";
-                    DialogResult result = MessageBox.Show(masseage, Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-                    if (result == DialogResult.Yes)
-                    {
-                        var deleteEmployee = list.FindIndex(u => u.MSNV == tempMSNV);
-                        list.RemoveAt(deleteEmployee);
-                        //load datagridview
-                        LoadListEmployee();
-                        txtMSNV.Text = GetMSNV();
-                    }
+                    var deleteEmployee = list.FindIndex(u => u.MSNV == tempMSNV);
+                    list.RemoveAt(deleteEmployee);
+                    //load datagridview
+                    LoadListEmployee();
+                    txtMSNV.Text = GetMSNV();
                 }
+            }
         }
 
         private void dataDS_CellEnter(object sender, DataGridViewCellEventArgs e)
@@ -298,7 +309,8 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
             {
                 tempMSNV = dataDS.Rows[e.RowIndex].Cells[1].Value.ToString();
             }
-            catch {
+            catch
+            {
                 //Khi dòng cuối thì gán để không bị lỗi
                 tempMSNV = "";
             }
@@ -306,7 +318,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCEmployee
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            
             employeeBO.Add(list);
             txtMSNV.Text = employeeBO.AutoGetMSNV();
             list.Clear();

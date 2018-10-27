@@ -1,20 +1,15 @@
-﻿using System;
+﻿using BUS.Business;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using BUS.Business;
 
 namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
 {
     public partial class MCCustomerMG : UserControl
     {
-
         #region Generate Fiedld
+
         private PaymentInputBO paymentInputBO = new PaymentInputBO();
         private PaymentOutputBO paymentOutputBO = new PaymentOutputBO();
         public ProductBO productIpBO = new ProductBO();
@@ -23,9 +18,11 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         public ProductOutputBO productOutputBO = new ProductOutputBO();
         public CustomerBO customerBO = new CustomerBO();
         public CustomerTypeBO customerTypeBO = new CustomerTypeBO();
-        #endregion
+
+        #endregion Generate Fiedld
 
         #region Support
+
         private void loadProductType()
         {
             var customerType = customerTypeBO.GetData(u => u.isDelete == false);
@@ -52,6 +49,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 txtProductType.Text = "All";
             }
         }
+
         private void loadCustomerType()
         {
             txtCustomerType.Items.Clear();
@@ -62,6 +60,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtCustomerType.Text = listDB.First().Type;
         }
+
         private void loadCustomerName()
         {
             txtCustomerName.Items.Clear();
@@ -73,6 +72,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             txtCustomerName.Items.Add("All");
             txtCustomerName.Text = "All";
         }
+
         public void loadDay(int month, int year)
         {
             int day = DateTime.DaysInMonth(year, month);
@@ -89,6 +89,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtDay.Items.Add("");
         }
+
         public void loadMonth()
         {
             txtMonth.Items.Clear();
@@ -98,6 +99,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtMonth.Items.Add("");
         }
+
         public void loadYear()
         {
             int Year = DateTime.Now.Year;
@@ -106,6 +108,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 txtYear.Items.Add(i);
             }
         }
+
         public void loadDayMonthYear()
         {
             txtDay.Text = DateTime.Now.Day.ToString();
@@ -117,6 +120,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             loadMonth();
             loadYear();
         }
+
         public void loadInputDG(List<Data.PaymentInput> list)
         {
             int i = 0;
@@ -141,9 +145,9 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 i++;
             }
         }
+
         public void loadOutputDG(List<Data.PaymentOutput> list)
         {
-
             int i = 0;
             dataDS.Rows.Clear();
             foreach (var item in list)
@@ -166,6 +170,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 i++;
             }
         }
+
         public void loadTotalWeightInput(List<Data.ProductInput> list)
         {
             Int64 result = 0;
@@ -175,15 +180,17 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtTotalWeight.Text = string.Format("{0:#,##0.##}", result) + " (KG)";
         }
+
         public void loadTotalAmountInput(List<Data.ProductInput> list)
         {
-            int result=0;
+            int result = 0;
             foreach (var item in list)
             {
                 result += item.TotalAmount.Value;
             }
             txtTotalAmount.Text = string.Format("{0:#,##0.##}", result) + " (VNĐ)";
         }
+
         public void loadTotalPayInput(List<Data.PaymentInput> list)
         {
             Int64 result = 0;
@@ -193,6 +200,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtTotalPay.Text = string.Format("{0:#,##0.##}", result) + " (VNĐ)";
         }
+
         public void loadTotalWeightOutput(List<Data.ProductOutput> list)
         {
             Int64 result = 0;
@@ -202,6 +210,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtTotalWeight.Text = string.Format("{0:#,##0.##}", result) + " (KG)";
         }
+
         public void loadTotalAmountOutput(List<Data.ProductOutput> list)
         {
             Int64 result = 0;
@@ -211,6 +220,7 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtTotalAmount.Text = string.Format("{0:#,##0.##}", result) + " (VNĐ)";
         }
+
         public void loadTotalPayOutput(List<Data.PaymentOutput> list)
         {
             Int64 result = 0;
@@ -220,15 +230,12 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             txtTotalPay.Text = string.Format("{0:#,##0.##}", result) + " (VNĐ)";
         }
-        #endregion
+
+        #endregion Support
+
         public MCCustomerMG()
         {
             InitializeComponent();
-        }
-
-        private void dataDS_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
 
         private void MCCustomerMG_Load(object sender, EventArgs e)
@@ -240,12 +247,14 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             int year = int.Parse(txtYear.Text);
             txtDay.Text = "";
             List<Data.PaymentInput> listDB = paymentInputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year).ToList();
-            List<Data.ProductInput> list = productInputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year&&u.Payed!=0).ToList();
+            List<Data.ProductInput> list = productInputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0).ToList();
             loadTotalAmountInput(list);
             loadTotalWeightInput(list);
             loadTotalPayInput(listDB);
             loadInputDG(listDB);
         }
+
+        #region Event Customer , Product
 
         private void txtCustomerType_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -258,386 +267,6 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
                 {
                     loadCustomerName();
                     loadProductType();
-                    if (txtCustomerName.Text.Equals("All"))
-                    {
-                        if (txtProductType.Text == "All")
-                        {
-                            if (txtMonth.Text != string.Empty)
-                            {
-                                if (txtDay.Text != string.Empty)
-                                {
-                                    int day = int.Parse(txtDay.Text);
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
-                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.Date.Value == date).ToList();
-                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Date.Value == date&&u.Payed!=0).ToList();
-                                    loadInputDG(listDB);
-                                    loadTotalAmountInput(list);
-                                    loadTotalWeightInput(list);
-                                    loadTotalPayInput(listDB);
-                                }
-                                else
-                                {
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year).ToList();
-                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year&&u.Payed!=0).ToList();
-                                    loadInputDG(listDB);
-                                    loadTotalAmountInput(list);
-                                    loadTotalWeightInput(list);
-                                    loadTotalPayInput(listDB);
-                                }
-                            }
-                            else
-                            {
-                                int year = int.Parse(txtYear.Text);
-                                var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.Date.Value.Year == year).ToList();
-                                var list = productInputBO.GetData(u => u.isDelete == false && u.Date.Value.Year == year&&u.Payed!=0).ToList();
-                                loadInputDG(listDB);
-                                loadTotalAmountInput(list);
-                                loadTotalWeightInput(list);
-                                loadTotalPayInput(listDB);
-                            }
-                        }
-                        else
-                        {
-                            if (txtMonth.Text != string.Empty)
-                            {
-                                if (txtDay.Text != string.Empty)
-                                {
-                                    int day = int.Parse(txtDay.Text);
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string ProductName = txtProductType.Text;
-                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
-                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.ProductName == ProductName && u.Date.Value == date, u => u.ProductInput).ToList();
-                                    var list = productInputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value == date&&u.Payed!=0).ToList();
-                                    loadInputDG(listDB);
-                                    loadTotalAmountInput(list);
-                                    loadTotalWeightInput(list);
-                                    loadTotalPayInput(listDB);
-                                }
-                                else
-                                {
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string ProductName = txtProductType.Text;
-                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductInput).ToList();
-                                    var list = productInputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year&&u.Payed!=0).ToList();
-                                    loadInputDG(listDB);
-                                    loadTotalAmountInput(list);
-                                    loadTotalWeightInput(list);
-                                    loadTotalPayInput(listDB);
-                                }
-                            }
-                            else
-                            {
-                                int year = int.Parse(txtYear.Text);
-                                string ProductName = txtProductType.Text;
-                                var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.ProductName == ProductName && u.Date.Value.Year == year,u=>u.ProductInput).ToList();
-                                var list = productInputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value.Year == year&&u.Payed!=0).ToList();
-                                loadInputDG(listDB);
-                                loadTotalAmountInput(list);
-                                loadTotalWeightInput(list);
-                                loadTotalPayInput(listDB);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (txtProductType.Text == "All")
-                        {
-                            if (txtMonth.Text != string.Empty)
-                            {
-                                if (txtDay.Text != string.Empty)
-                                {
-                                    int day = int.Parse(txtDay.Text);
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string CustomerName = txtCustomerName.Text.Trim();
-                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
-                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.Date.Value == date, u => u.ProductInput.Customer).ToList();
-                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value == date&&u.Payed!=0,u=>u.Customer).ToList();
-                                    loadInputDG(listDB);
-                                    loadTotalAmountInput(list);
-                                    loadTotalWeightInput(list);
-                                    loadTotalPayInput(listDB);
-                                }
-                                else
-                                {
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string CustomerName = txtCustomerName.Text.Trim();
-                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductInput.Customer).ToList();
-                                    var list= productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value.Month == month && u.Date.Value.Year == year&& u.Payed != 0, u => u.Customer).ToList();
-                                    loadInputDG(listDB);
-                                    loadTotalAmountInput(list);
-                                    loadTotalWeightInput(list);
-                                    loadTotalPayInput(listDB);
-                                }
-                            }
-                            else
-                            {
-                                string CustomerName = txtCustomerName.Text.Trim();
-                                int year = int.Parse(txtYear.Text);
-                                var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.Date.Value.Year == year, u => u.ProductInput.Customer).ToList();
-                                var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value.Year == year&&u.Payed!=0,u=>u.Customer).ToList();
-                                loadInputDG(listDB);
-                                loadTotalAmountInput(list);
-                                loadTotalWeightInput(list);
-                                loadTotalPayInput(listDB);
-                            }
-                        }
-                        else
-                        {
-                            if (txtMonth.Text != string.Empty)
-                            {
-                                if (txtDay.Text != string.Empty)
-                                {
-                                    int day = int.Parse(txtDay.Text);
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string ProductName = txtProductType.Text;
-                                    string CustomerName = txtCustomerName.Text.Trim();
-                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
-                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.ProductInput.ProductName == ProductName && u.Date.Value == date, u => u.ProductInput.Customer).ToList();
-                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value == date&&u.Payed!=0, u => u.Customer).ToList();
-                                    loadInputDG(listDB);
-                                    loadTotalAmountInput(list);
-                                    loadTotalWeightInput(list);
-                                    loadTotalPayInput(listDB);
-                                }
-                                else
-                                {
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string ProductName = txtProductType.Text;
-                                    string CustomerName = txtCustomerName.Text.Trim();
-                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.ProductInput.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductInput.Customer).ToList();
-                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
-                                    loadInputDG(listDB);
-                                    loadTotalAmountInput(list);
-                                    loadTotalWeightInput(list);
-                                    loadTotalPayInput(listDB);
-                                }
-                            }
-                            else
-                            {
-                                int year = int.Parse(txtYear.Text);
-                                string ProductName = txtProductType.Text;
-                                string CustomerName = txtCustomerName.Text.Trim();
-                                var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.ProductInput.ProductName == ProductName && u.Date.Value.Year == year, u => u.ProductInput.Customer).ToList();
-                                var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value.Year == year && u.Payed!=0, u => u.Customer).ToList();
-                                loadInputDG(listDB);
-                                loadTotalAmountInput(list);
-                                loadTotalWeightInput(list);
-                                loadTotalPayInput(listDB);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    loadCustomerName();
-                    loadProductType();
-                    if (txtCustomerName.Text.Equals("All"))
-                    {
-                        if (txtProductType.Text == "All")
-                        {
-                            if (txtMonth.Text != string.Empty)
-                            {
-                                if (txtDay.Text != string.Empty)
-                                {
-                                    int day = int.Parse(txtDay.Text);
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
-                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.Date.Value == date).ToList();
-                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Date.Value == date&&u.Payed!=0).ToList();
-                                    loadOutputDG(listDB);
-                                    loadTotalAmountOutput(list);
-                                    loadTotalWeightOutput(list);
-                                    loadTotalPayOutput(listDB);
-                                }
-                                else
-                                {
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year).ToList();
-                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year&&u.Payed!=0).ToList();
-                                    loadOutputDG(listDB);
-                                    loadTotalAmountOutput(list);
-                                    loadTotalWeightOutput(list);
-                                    loadTotalPayOutput(listDB);
-                                }
-                            }
-                            else
-                            {
-                                int year = int.Parse(txtYear.Text);
-                                var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.Date.Value.Year == year).ToList();
-                                var list = productOutputBO.GetData(u => u.isDelete == false && u.Date.Value.Year == year&&u.Payed!=0).ToList();
-                                loadOutputDG(listDB);
-                                loadTotalAmountOutput(list);
-                                loadTotalWeightOutput(list);
-                                loadTotalPayOutput(listDB);
-                            }
-                        }
-                        else
-                        {
-                            if (txtMonth.Text != string.Empty)
-                            {
-                                if (txtDay.Text != string.Empty)
-                                {
-                                    int day = int.Parse(txtDay.Text);
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string ProductName = txtProductType.Text;
-                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
-                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.ProductName == ProductName && u.Date.Value == date).ToList();
-                                    var list =productOutputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value == date&&u.Payed!=0).ToList();
-                                    loadOutputDG(listDB);
-                                    loadTotalAmountOutput(list);
-                                    loadTotalWeightOutput(list);
-                                    loadTotalPayOutput(listDB);
-                                }
-                                else
-                                {
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string ProductName = txtProductType.Text;
-                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year).ToList();
-                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year&&u.Payed!=0).ToList();
-                                    loadOutputDG(listDB);
-                                    loadTotalAmountOutput(list);
-                                    loadTotalWeightOutput(list);
-                                    loadTotalPayOutput(listDB);
-                                }
-                            }
-                            else
-                            {
-                                int year = int.Parse(txtYear.Text);
-                                string ProductName = txtProductType.Text;
-                                var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.ProductName == ProductName && u.Date.Value.Year == year).ToList();
-                                var list = productOutputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value.Year == year && u.Payed != 0).ToList();
-                                loadOutputDG(listDB);
-                                loadTotalAmountOutput(list);
-                                loadTotalWeightOutput(list);
-                                loadTotalPayOutput(listDB);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (txtProductType.Text == "All")
-                        {
-                            if (txtMonth.Text != string.Empty)
-                            {
-                                if (txtDay.Text != string.Empty)
-                                {
-                                    int day = int.Parse(txtDay.Text);
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string CustomerName = txtCustomerName.Text.Trim();
-                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
-                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.Date.Value == date, u => u.ProductOutput.Customer).ToList();
-                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value == date&&u.Payed!=0, u => u.Customer).ToList();
-                                    loadOutputDG(listDB);
-                                    loadTotalAmountOutput(list);
-                                    loadTotalWeightOutput(list);
-                                    loadTotalPayOutput(listDB);
-                                }
-                                else
-                                {
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string CustomerName = txtCustomerName.Text.Trim();
-                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductOutput.Customer).ToList();
-                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value.Month == month && u.Date.Value.Year == year&&u.Payed!=0, u => u.Customer).ToList();
-                                    loadOutputDG(listDB);
-                                    loadTotalAmountOutput(list);
-                                    loadTotalWeightOutput(list);
-                                    loadTotalPayOutput(listDB);
-                                }
-                            }
-                            else
-                            {
-                                string CustomerName = txtCustomerName.Text.Trim();
-                                int year = int.Parse(txtYear.Text);
-                                var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.Date.Value.Year == year, u => u.ProductOutput.Customer).ToList();
-                                var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value.Year == year&&u.Payed!=0, u => u.Customer).ToList();
-                                loadOutputDG(listDB);
-                                loadTotalAmountOutput(list);
-                                loadTotalWeightOutput(list);
-                                loadTotalPayOutput(listDB);
-                            }
-                        }
-                        else
-                        {
-                            if (txtMonth.Text != string.Empty)
-                            {
-                                if (txtDay.Text != string.Empty)
-                                {
-                                    int day = int.Parse(txtDay.Text);
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string ProductName = txtProductType.Text;
-                                    string CustomerName = txtCustomerName.Text.Trim();
-                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
-                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.ProductOutput.ProductName == ProductName && u.Date.Value == date, u => u.ProductOutput.Customer).ToList();
-                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value == date&&u.Payed!=0, u => u.Customer).ToList();
-                                    loadOutputDG(listDB);
-                                    loadTotalAmountOutput(list);
-                                    loadTotalWeightOutput(list);
-                                    loadTotalPayOutput(listDB);
-                                }
-                                else
-                                {
-                                    int month = int.Parse(txtMonth.Text);
-                                    int year = int.Parse(txtYear.Text);
-                                    string ProductName = txtProductType.Text;
-                                    string CustomerName = txtCustomerName.Text.Trim();
-                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.ProductOutput.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductOutput.Customer).ToList();
-                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year&&u.Payed!=0, u => u.Customer).ToList();
-                                    loadOutputDG(listDB);
-                                    loadTotalAmountOutput(list);
-                                    loadTotalWeightOutput(list);
-                                    loadTotalPayOutput(listDB);
-                                }
-                            }
-                            else
-                            {
-                                int year = int.Parse(txtYear.Text);
-                                string ProductName = txtProductType.Text;
-                                string CustomerName = txtCustomerName.Text.Trim();
-                                var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.ProductOutput.ProductName == ProductName && u.Date.Value.Year == year, u => u.ProductOutput.Customer).ToList();
-                                var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value.Year == year&&u.Payed!=0, u => u.Customer).ToList();
-                                loadOutputDG(listDB);
-                                loadTotalAmountOutput(list);
-                                loadTotalWeightOutput(list);
-                                loadTotalPayOutput(listDB);
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
-
-        private void txtCustomerType_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
-        private void txtCustomerName_SelectedValueChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                txtDay.Text = string.Empty;
-                txtMonth.Text = DateTime.Now.Month.ToString(); ;
-                txtYear.Text = DateTime.Now.Year.ToString();
-                if (txtCustomerType.Text.Equals("Nhập hàng"))
-                {
                     if (txtCustomerName.Text.Equals("All"))
                     {
                         if (txtProductType.Text == "All")
@@ -1003,5 +632,419 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             }
             catch { }
         }
+
+        private void txtCustomerName_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtCustomerType.Text.Equals("Nhập hàng"))
+                {
+                    if (txtCustomerName.Text.Equals("All"))
+                    {
+                        if (txtProductType.Text == "All")
+                        {
+                            if (txtMonth.Text != string.Empty)
+                            {
+                                if (txtDay.Text != string.Empty)
+                                {
+                                    int day = int.Parse(txtDay.Text);
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
+                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.Date.Value == date).ToList();
+                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Date.Value == date && u.Payed != 0).ToList();
+                                    loadInputDG(listDB);
+                                    loadTotalAmountInput(list);
+                                    loadTotalWeightInput(list);
+                                    loadTotalPayInput(listDB);
+                                }
+                                else
+                                {
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year).ToList();
+                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0).ToList();
+                                    loadInputDG(listDB);
+                                    loadTotalAmountInput(list);
+                                    loadTotalWeightInput(list);
+                                    loadTotalPayInput(listDB);
+                                }
+                            }
+                            else
+                            {
+                                int year = int.Parse(txtYear.Text);
+                                var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.Date.Value.Year == year).ToList();
+                                var list = productInputBO.GetData(u => u.isDelete == false && u.Date.Value.Year == year && u.Payed != 0).ToList();
+                                loadInputDG(listDB);
+                                loadTotalAmountInput(list);
+                                loadTotalWeightInput(list);
+                                loadTotalPayInput(listDB);
+                            }
+                        }
+                        else
+                        {
+                            if (txtMonth.Text != string.Empty)
+                            {
+                                if (txtDay.Text != string.Empty)
+                                {
+                                    int day = int.Parse(txtDay.Text);
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string ProductName = txtProductType.Text;
+                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
+                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.ProductName == ProductName && u.Date.Value == date, u => u.ProductInput).ToList();
+                                    var list = productInputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value == date && u.Payed != 0).ToList();
+                                    loadInputDG(listDB);
+                                    loadTotalAmountInput(list);
+                                    loadTotalWeightInput(list);
+                                    loadTotalPayInput(listDB);
+                                }
+                                else
+                                {
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string ProductName = txtProductType.Text;
+                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductInput).ToList();
+                                    var list = productInputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0).ToList();
+                                    loadInputDG(listDB);
+                                    loadTotalAmountInput(list);
+                                    loadTotalWeightInput(list);
+                                    loadTotalPayInput(listDB);
+                                }
+                            }
+                            else
+                            {
+                                int year = int.Parse(txtYear.Text);
+                                string ProductName = txtProductType.Text;
+                                var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.ProductName == ProductName && u.Date.Value.Year == year, u => u.ProductInput).ToList();
+                                var list = productInputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value.Year == year && u.Payed != 0).ToList();
+                                loadInputDG(listDB);
+                                loadTotalAmountInput(list);
+                                loadTotalWeightInput(list);
+                                loadTotalPayInput(listDB);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (txtProductType.Text == "All")
+                        {
+                            if (txtMonth.Text != string.Empty)
+                            {
+                                if (txtDay.Text != string.Empty)
+                                {
+                                    int day = int.Parse(txtDay.Text);
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string CustomerName = txtCustomerName.Text.Trim();
+                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
+                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.Date.Value == date, u => u.ProductInput.Customer).ToList();
+                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value == date && u.Payed != 0, u => u.Customer).ToList();
+                                    loadInputDG(listDB);
+                                    loadTotalAmountInput(list);
+                                    loadTotalWeightInput(list);
+                                    loadTotalPayInput(listDB);
+                                }
+                                else
+                                {
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string CustomerName = txtCustomerName.Text.Trim();
+                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductInput.Customer).ToList();
+                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
+                                    loadInputDG(listDB);
+                                    loadTotalAmountInput(list);
+                                    loadTotalWeightInput(list);
+                                    loadTotalPayInput(listDB);
+                                }
+                            }
+                            else
+                            {
+                                string CustomerName = txtCustomerName.Text.Trim();
+                                int year = int.Parse(txtYear.Text);
+                                var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.Date.Value.Year == year, u => u.ProductInput.Customer).ToList();
+                                var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
+                                loadInputDG(listDB);
+                                loadTotalAmountInput(list);
+                                loadTotalWeightInput(list);
+                                loadTotalPayInput(listDB);
+                            }
+                        }
+                        else
+                        {
+                            if (txtMonth.Text != string.Empty)
+                            {
+                                if (txtDay.Text != string.Empty)
+                                {
+                                    int day = int.Parse(txtDay.Text);
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string ProductName = txtProductType.Text;
+                                    string CustomerName = txtCustomerName.Text.Trim();
+                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
+                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.ProductInput.ProductName == ProductName && u.Date.Value == date, u => u.ProductInput.Customer).ToList();
+                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value == date && u.Payed != 0, u => u.Customer).ToList();
+                                    loadInputDG(listDB);
+                                    loadTotalAmountInput(list);
+                                    loadTotalWeightInput(list);
+                                    loadTotalPayInput(listDB);
+                                }
+                                else
+                                {
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string ProductName = txtProductType.Text;
+                                    string CustomerName = txtCustomerName.Text.Trim();
+                                    var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.ProductInput.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductInput.Customer).ToList();
+                                    var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
+                                    loadInputDG(listDB);
+                                    loadTotalAmountInput(list);
+                                    loadTotalWeightInput(list);
+                                    loadTotalPayInput(listDB);
+                                }
+                            }
+                            else
+                            {
+                                int year = int.Parse(txtYear.Text);
+                                string ProductName = txtProductType.Text;
+                                string CustomerName = txtCustomerName.Text.Trim();
+                                var listDB = paymentInputBO.GetData(u => u.isDelete == false && u.ProductInput.Customer.Name == CustomerName && u.ProductInput.ProductName == ProductName && u.Date.Value.Year == year, u => u.ProductInput.Customer).ToList();
+                                var list = productInputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
+                                loadInputDG(listDB);
+                                loadTotalAmountInput(list);
+                                loadTotalWeightInput(list);
+                                loadTotalPayInput(listDB);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (txtCustomerName.Text.Equals("All"))
+                    {
+                        if (txtProductType.Text == "All")
+                        {
+                            if (txtMonth.Text != string.Empty)
+                            {
+                                if (txtDay.Text != string.Empty)
+                                {
+                                    int day = int.Parse(txtDay.Text);
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
+                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.Date.Value == date).ToList();
+                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Date.Value == date && u.Payed != 0).ToList();
+                                    loadOutputDG(listDB);
+                                    loadTotalAmountOutput(list);
+                                    loadTotalWeightOutput(list);
+                                    loadTotalPayOutput(listDB);
+                                }
+                                else
+                                {
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year).ToList();
+                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0).ToList();
+                                    loadOutputDG(listDB);
+                                    loadTotalAmountOutput(list);
+                                    loadTotalWeightOutput(list);
+                                    loadTotalPayOutput(listDB);
+                                }
+                            }
+                            else
+                            {
+                                int year = int.Parse(txtYear.Text);
+                                var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.Date.Value.Year == year).ToList();
+                                var list = productOutputBO.GetData(u => u.isDelete == false && u.Date.Value.Year == year && u.Payed != 0).ToList();
+                                loadOutputDG(listDB);
+                                loadTotalAmountOutput(list);
+                                loadTotalWeightOutput(list);
+                                loadTotalPayOutput(listDB);
+                            }
+                        }
+                        else
+                        {
+                            if (txtMonth.Text != string.Empty)
+                            {
+                                if (txtDay.Text != string.Empty)
+                                {
+                                    int day = int.Parse(txtDay.Text);
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string ProductName = txtProductType.Text;
+                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
+                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.ProductName == ProductName && u.Date.Value == date).ToList();
+                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value == date && u.Payed != 0).ToList();
+                                    loadOutputDG(listDB);
+                                    loadTotalAmountOutput(list);
+                                    loadTotalWeightOutput(list);
+                                    loadTotalPayOutput(listDB);
+                                }
+                                else
+                                {
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string ProductName = txtProductType.Text;
+                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year).ToList();
+                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0).ToList();
+                                    loadOutputDG(listDB);
+                                    loadTotalAmountOutput(list);
+                                    loadTotalWeightOutput(list);
+                                    loadTotalPayOutput(listDB);
+                                }
+                            }
+                            else
+                            {
+                                int year = int.Parse(txtYear.Text);
+                                string ProductName = txtProductType.Text;
+                                var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.ProductName == ProductName && u.Date.Value.Year == year).ToList();
+                                var list = productOutputBO.GetData(u => u.isDelete == false && u.ProductName == ProductName && u.Date.Value.Year == year && u.Payed != 0).ToList();
+                                loadOutputDG(listDB);
+                                loadTotalAmountOutput(list);
+                                loadTotalWeightOutput(list);
+                                loadTotalPayOutput(listDB);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (txtProductType.Text == "All")
+                        {
+                            if (txtMonth.Text != string.Empty)
+                            {
+                                if (txtDay.Text != string.Empty)
+                                {
+                                    int day = int.Parse(txtDay.Text);
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string CustomerName = txtCustomerName.Text.Trim();
+                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
+                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.Date.Value == date, u => u.ProductOutput.Customer).ToList();
+                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value == date && u.Payed != 0, u => u.Customer).ToList();
+                                    loadOutputDG(listDB);
+                                    loadTotalAmountOutput(list);
+                                    loadTotalWeightOutput(list);
+                                    loadTotalPayOutput(listDB);
+                                }
+                                else
+                                {
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string CustomerName = txtCustomerName.Text.Trim();
+                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductOutput.Customer).ToList();
+                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
+                                    loadOutputDG(listDB);
+                                    loadTotalAmountOutput(list);
+                                    loadTotalWeightOutput(list);
+                                    loadTotalPayOutput(listDB);
+                                }
+                            }
+                            else
+                            {
+                                string CustomerName = txtCustomerName.Text.Trim();
+                                int year = int.Parse(txtYear.Text);
+                                var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.Date.Value.Year == year, u => u.ProductOutput.Customer).ToList();
+                                var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
+                                loadOutputDG(listDB);
+                                loadTotalAmountOutput(list);
+                                loadTotalWeightOutput(list);
+                                loadTotalPayOutput(listDB);
+                            }
+                        }
+                        else
+                        {
+                            if (txtMonth.Text != string.Empty)
+                            {
+                                if (txtDay.Text != string.Empty)
+                                {
+                                    int day = int.Parse(txtDay.Text);
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string ProductName = txtProductType.Text;
+                                    string CustomerName = txtCustomerName.Text.Trim();
+                                    DateTime date = DateTime.Parse(day + "/" + month + "/" + year);
+                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.ProductOutput.ProductName == ProductName && u.Date.Value == date, u => u.ProductOutput.Customer).ToList();
+                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value == date && u.Payed != 0, u => u.Customer).ToList();
+                                    loadOutputDG(listDB);
+                                    loadTotalAmountOutput(list);
+                                    loadTotalWeightOutput(list);
+                                    loadTotalPayOutput(listDB);
+                                }
+                                else
+                                {
+                                    int month = int.Parse(txtMonth.Text);
+                                    int year = int.Parse(txtYear.Text);
+                                    string ProductName = txtProductType.Text;
+                                    string CustomerName = txtCustomerName.Text.Trim();
+                                    var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.ProductOutput.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year, u => u.ProductOutput.Customer).ToList();
+                                    var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value.Month == month && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
+                                    loadOutputDG(listDB);
+                                    loadTotalAmountOutput(list);
+                                    loadTotalWeightOutput(list);
+                                    loadTotalPayOutput(listDB);
+                                }
+                            }
+                            else
+                            {
+                                int year = int.Parse(txtYear.Text);
+                                string ProductName = txtProductType.Text;
+                                string CustomerName = txtCustomerName.Text.Trim();
+                                var listDB = paymentOutputBO.GetData(u => u.isDelete == false && u.ProductOutput.Customer.Name == CustomerName && u.ProductOutput.ProductName == ProductName && u.Date.Value.Year == year, u => u.ProductOutput.Customer).ToList();
+                                var list = productOutputBO.GetData(u => u.isDelete == false && u.Customer.Name == CustomerName && u.ProductName == ProductName && u.Date.Value.Year == year && u.Payed != 0, u => u.Customer).ToList();
+                                loadOutputDG(listDB);
+                                loadTotalAmountOutput(list);
+                                loadTotalWeightOutput(list);
+                                loadTotalPayOutput(listDB);
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        private void txtProductType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            txtCustomerName_SelectedValueChanged(sender, e);
+        }
+
+        private void txtCustomerType_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        #endregion Event Customer , Product
+
+        #region Date
+
+        private void txtDay_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (txtMonth.Text == string.Empty)
+            {
+                txtDay.Text = string.Empty;
+            }
+            txtProductType_SelectedValueChanged(sender, e);
+        }
+
+        private void txtMonth_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (txtMonth.Text == string.Empty)
+            {
+                txtDay.Text = string.Empty;
+            }
+            txtProductType_SelectedValueChanged(sender, e);
+        }
+
+        private void txtYear_SelectedValueChanged(object sender, EventArgs e)
+        {
+            txtProductType_SelectedValueChanged(sender, e);
+        }
+
+        private void txtDay_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        #endregion Date
     }
 }

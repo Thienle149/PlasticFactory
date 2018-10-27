@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MCCustomerMG));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtTotalAmount = new System.Windows.Forms.Label();
             this.txtTotalWeight = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -179,6 +179,8 @@
             this.txtProductType.Name = "txtProductType";
             this.txtProductType.Size = new System.Drawing.Size(157, 23);
             this.txtProductType.TabIndex = 23;
+            this.txtProductType.SelectedValueChanged += new System.EventHandler(this.txtProductType_SelectedValueChanged);
+            this.txtProductType.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCustomerType_KeyPress_1);
             // 
             // label2
             // 
@@ -199,6 +201,8 @@
             this.txtMonth.Name = "txtMonth";
             this.txtMonth.Size = new System.Drawing.Size(82, 23);
             this.txtMonth.TabIndex = 20;
+            this.txtMonth.SelectedValueChanged += new System.EventHandler(this.txtMonth_SelectedValueChanged);
+            this.txtMonth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDay_KeyPress);
             // 
             // txtYear
             // 
@@ -208,6 +212,8 @@
             this.txtYear.Name = "txtYear";
             this.txtYear.Size = new System.Drawing.Size(102, 23);
             this.txtYear.TabIndex = 18;
+            this.txtYear.SelectedValueChanged += new System.EventHandler(this.txtYear_SelectedValueChanged);
+            this.txtYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDay_KeyPress);
             // 
             // pictureBox7
             // 
@@ -227,6 +233,8 @@
             this.txtDay.Name = "txtDay";
             this.txtDay.Size = new System.Drawing.Size(82, 23);
             this.txtDay.TabIndex = 16;
+            this.txtDay.SelectedValueChanged += new System.EventHandler(this.txtDay_SelectedValueChanged);
+            this.txtDay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDay_KeyPress);
             // 
             // pictureBox4
             // 
@@ -247,6 +255,7 @@
             this.txtCustomerName.Size = new System.Drawing.Size(157, 23);
             this.txtCustomerName.TabIndex = 14;
             this.txtCustomerName.SelectedValueChanged += new System.EventHandler(this.txtCustomerName_SelectedValueChanged);
+            this.txtCustomerName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCustomerType_KeyPress_1);
             // 
             // pictureBox1
             // 
@@ -311,7 +320,7 @@
             this.txtCustomerType.Size = new System.Drawing.Size(157, 23);
             this.txtCustomerType.TabIndex = 0;
             this.txtCustomerType.SelectedValueChanged += new System.EventHandler(this.txtCustomerType_SelectedValueChanged);
-            this.txtCustomerType.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCustomerType_KeyPress);
+            this.txtCustomerType.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCustomerType_KeyPress_1);
             // 
             // label8
             // 
@@ -357,14 +366,14 @@
             // 
             // dataDS
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataDS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataDS.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataDS.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataDS.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MSTT,
@@ -384,7 +393,6 @@
             this.dataDS.ReadOnly = true;
             this.dataDS.Size = new System.Drawing.Size(1297, 354);
             this.dataDS.TabIndex = 128;
-            this.dataDS.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataDS_CellContentClick);
             // 
             // MSTT
             // 
