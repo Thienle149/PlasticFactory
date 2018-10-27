@@ -42,20 +42,20 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtMSTT = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.txtMSHD = new System.Windows.Forms.Label();
-            this.txtProductNames = new System.Windows.Forms.Label();
-            this.txtProductWeight = new System.Windows.Forms.Label();
-            this.txtAmount = new System.Windows.Forms.Label();
             this.txtPayed = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.txtAmount = new System.Windows.Forms.Label();
+            this.txtProductWeight = new System.Windows.Forms.Label();
+            this.txtProductNames = new System.Windows.Forms.Label();
+            this.txtMSHD = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMSKH
@@ -199,9 +199,19 @@
             this.label2.ForeColor = System.Drawing.SystemColors.Control;
             this.label2.Location = new System.Drawing.Point(72, 32);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(141, 18);
+            this.label2.Size = new System.Drawing.Size(133, 18);
             this.label2.TabIndex = 76;
             this.label2.Text = "Cập nhật thông tin";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(11, 7);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(55, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 75;
+            this.pictureBox1.TabStop = false;
             // 
             // label7
             // 
@@ -229,7 +239,7 @@
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(300, 268);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(94, 16);
+            this.label12.Size = new System.Drawing.Size(91, 16);
             this.label12.TabIndex = 124;
             this.label12.Text = "Tiền đã trả :";
             // 
@@ -264,35 +274,15 @@
             this.panel2.Size = new System.Drawing.Size(800, 450);
             this.panel2.TabIndex = 79;
             // 
-            // txtMSHD
+            // txtPayed
             // 
-            this.txtMSHD.AutoSize = true;
-            this.txtMSHD.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMSHD.Location = new System.Drawing.Point(398, 119);
-            this.txtMSHD.Name = "txtMSHD";
-            this.txtMSHD.Size = new System.Drawing.Size(77, 16);
-            this.txtMSHD.TabIndex = 135;
-            this.txtMSHD.Text = "NH0000001";
-            // 
-            // txtProductNames
-            // 
-            this.txtProductNames.AutoSize = true;
-            this.txtProductNames.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProductNames.Location = new System.Drawing.Point(398, 153);
-            this.txtProductNames.Name = "txtProductNames";
-            this.txtProductNames.Size = new System.Drawing.Size(103, 16);
-            this.txtProductNames.TabIndex = 136;
-            this.txtProductNames.Text = "txtProductName";
-            // 
-            // txtProductWeight
-            // 
-            this.txtProductWeight.AutoSize = true;
-            this.txtProductWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProductWeight.Location = new System.Drawing.Point(398, 187);
-            this.txtProductWeight.Name = "txtProductWeight";
-            this.txtProductWeight.Size = new System.Drawing.Size(20, 16);
-            this.txtProductWeight.TabIndex = 137;
-            this.txtProductWeight.Text = "txt";
+            this.txtPayed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPayed.Location = new System.Drawing.Point(303, 287);
+            this.txtPayed.Name = "txtPayed";
+            this.txtPayed.Size = new System.Drawing.Size(205, 22);
+            this.txtPayed.TabIndex = 139;
+            this.txtPayed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPayed_KeyPress);
+            this.txtPayed.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPayed_KeyUp);
             // 
             // txtAmount
             // 
@@ -304,24 +294,35 @@
             this.txtAmount.TabIndex = 138;
             this.txtAmount.Text = "1.000.000(VNĐ)";
             // 
-            // txtPayed
+            // txtProductWeight
             // 
-            this.txtPayed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPayed.Location = new System.Drawing.Point(303, 287);
-            this.txtPayed.Name = "txtPayed";
-            this.txtPayed.Size = new System.Drawing.Size(205, 22);
-            this.txtPayed.TabIndex = 139;
-            this.txtPayed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPayed_KeyPress);
+            this.txtProductWeight.AutoSize = true;
+            this.txtProductWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProductWeight.Location = new System.Drawing.Point(398, 187);
+            this.txtProductWeight.Name = "txtProductWeight";
+            this.txtProductWeight.Size = new System.Drawing.Size(20, 16);
+            this.txtProductWeight.TabIndex = 137;
+            this.txtProductWeight.Text = "txt";
             // 
-            // pictureBox1
+            // txtProductNames
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(11, 7);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(55, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 75;
-            this.pictureBox1.TabStop = false;
+            this.txtProductNames.AutoSize = true;
+            this.txtProductNames.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProductNames.Location = new System.Drawing.Point(398, 153);
+            this.txtProductNames.Name = "txtProductNames";
+            this.txtProductNames.Size = new System.Drawing.Size(103, 16);
+            this.txtProductNames.TabIndex = 136;
+            this.txtProductNames.Text = "txtProductName";
+            // 
+            // txtMSHD
+            // 
+            this.txtMSHD.AutoSize = true;
+            this.txtMSHD.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMSHD.Location = new System.Drawing.Point(398, 119);
+            this.txtMSHD.Name = "txtMSHD";
+            this.txtMSHD.Size = new System.Drawing.Size(77, 16);
+            this.txtMSHD.TabIndex = 135;
+            this.txtMSHD.Text = "NH0000001";
             // 
             // frmEditCustomerPay
             // 
@@ -335,9 +336,9 @@
             this.Load += new System.EventHandler(this.frmEditCustomerPay_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
