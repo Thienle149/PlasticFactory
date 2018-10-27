@@ -9,5 +9,7 @@ namespace BUS.Interface
     interface IPaymentOutput
     {
         int GetID();
+
+        bool isDelete(int ID);
     }
 }

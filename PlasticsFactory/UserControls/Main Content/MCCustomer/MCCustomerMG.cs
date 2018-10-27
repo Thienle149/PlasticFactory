@@ -19,6 +19,13 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
         public CustomerBO customerBO = new CustomerBO();
         public CustomerTypeBO customerTypeBO = new CustomerTypeBO();
         public static int DoubleClickRow = 0;
+        public int curMSTT = 0;
+        public struct Parameter
+        {
+            public int MSTT { get; set; }
+            public string MSHDOfType { get; set; }
+        }
+        private Parameter parameter = new Parameter();
         #endregion Generate Fiedld
 
         #region Support
@@ -1062,6 +1069,53 @@ namespace PlasticsFactory.UserControls.Main_Content.MCCustomer
             frmEditCustomerPay.Sender(MSTT,Date,MSHD,MSKH,CustomerName,ProductNames,ProductWeigth,Amount,Payed);
             frmEditCustomerPay.ShowDialog();
             txtCustomerName_SelectedValueChanged(sender, e);
+        }
+
+        private void dataDS_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex < dataDS.Rows.Count - 1)
+                {
+                    //curMSTT = int.Parse(dataDS.Rows[e.RowIndex].Cells[0].Value.ToString().Trim().Substring(2));
+                    parameter = new Parameter();
+                    parameter.MSTT = int.Parse(dataDS.Rows[e.RowIndex].Cells[0].Value.ToString().Trim().Substring(2));
+                    parameter.MSHDOfType = dataDS.Rows[e.RowIndex].Cells[4].Value.ToString().Trim().Substring(0,2);
+                }
+            }
+            catch { }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if(parameter.MSHDOfType!=string.Empty&&parameter.MSTT!=0)
+            {
+                string Type = parameter.MSHDOfType;
+                if(Type=="NH")
+                {
+                    string masseage = "Bạn có muốn xóa hóa đơn thanh toán TT" + parameter.MSTT.ToString("d6") + " không ?";
+                    string Title = "Chú ý";
+                    DialogResult result = MessageBox.Show(masseage, Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    if (result == DialogResult.Yes)
+                    {
+
+                        paymentInputBO.isDelete(parameter.MSTT);
+                    }
+                }
+                else
+                {
+                    string masseage = "Bạn có muốn xóa hóa đơn thanh toán TT" + parameter.MSTT.ToString("d6") + " không ?";
+                    string Title = "Chú ý";
+                    DialogResult result = MessageBox.Show(masseage, Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    if (result == DialogResult.Yes)
+                    {
+
+                        paymentOutputBO.isDelete(parameter.MSTT);
+                    }
+                }
+                parameter = new Parameter();
+                txtCustomerName_SelectedValueChanged(sender, e);
+            }
         }
     }
 }

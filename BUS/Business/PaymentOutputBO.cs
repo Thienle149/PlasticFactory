@@ -19,5 +19,23 @@ namespace BUS.Business
             }
             return GetData(u => u.isDelete == false).ToList().Last().ID + 1;
         }
+
+        public bool isDelete(int ID)
+        {
+            try
+            {
+                using (var db = new PlasticFactoryEntities())
+                {
+                    var obj = db.PaymentOutputs.Find(ID);
+                    obj.isDelete = true;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
